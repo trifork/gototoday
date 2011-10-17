@@ -28,10 +28,11 @@ class BootStrap {
     def destroy = {
     }
 
-    void save(GroovyObject object) {
-        if (object.hasErrors()) {
-            throw new RuntimeException(object.errors)
-        }
+    void save(object) {
         object.save()
+        if (object.hasErrors()) {
+            log.info("could not save ${object}")
+            throw new RuntimeException(object.errors.toString())
+        }
     }
 }
