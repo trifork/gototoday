@@ -1,5 +1,8 @@
 import org.apache.log4j.Appender
 import org.apache.log4j.net.SocketAppender
+import org.apache.log4j.net.SyslogAppender
+import org.apache.log4j.net.TelnetAppender
+import org.productivity.java.syslog4j.impl.log4j.Syslog4jAppender
 
 // locations to search for config files that get merged into the main config
 // config files can either be Java properties files or ConfigSlurper scripts
@@ -74,17 +77,36 @@ log4j = {
     // appender:
     //
     appenders {
-        //console name:'stdout', layout:pattern(conversionPattern: '%c{2} %m%n')
-        appender new SocketAppender (name:'splunkstorm', remoteHost: "logs2.splunkstorm.com", port: 20170)
-        //appender new SocketAppender (name:'splunkstorm', remoteHost:'localhost', port:8081)
+        console name:'stdout', layout:pattern(conversionPattern: '%c{2} %m%n')
+        appender new Syslog4jAppender (
+                name: 'splunkstorm',
+                protocol: 'tcp',
+                facility: 'USER',
+                host: 'logs2.splunkstorm.com',
+                port: '20170',
+                layout: pattern(conversionPattern: '%d{ABSOLUTE} %-5p [%c{1}] %m'),
+        )
+        /*
+        appender new SyslogAppender (
+                name:'splunkstorm',
+                syslogHost: 'tcp:logs2.splunkstorm.com:20170',
+                //layout: pattern(conversionPattern: 'sv-cdr-posted - %m'),
+                //facility: 'USER',
+                //facilityPrinting: true
+        )
+        */
 
         //environments {
         //    production {
         //    }
         //}
     }
+    root {
+        info 'stdout', 'splunkstorm'
+        additivity = true
+    }
 
-    info  'org.codehaus.groovy.grails.web.servlet',  //  controllers
+    error  'org.codehaus.groovy.grails.web.servlet',  //  controllers
            'org.codehaus.groovy.grails.web.pages', //  GSP
            'org.codehaus.groovy.grails.web.sitemesh', //  layouts
            'org.codehaus.groovy.grails.web.mapping.filter', // URL mapping
