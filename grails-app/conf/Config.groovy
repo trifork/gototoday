@@ -74,8 +74,9 @@ log4j = {
     // appender:
     //
     appenders {
-        console name:'stdout', layout:pattern(conversionPattern: '%c{2} %m%n')
+        //console name:'stdout', layout:pattern(conversionPattern: '%c{2} %m%n')
         appender new SocketAppender (name:'splunkstorm', remoteHost: "logs2.splunkstorm.com", port: 20170)
+        //appender new SocketAppender (name:'splunkstorm', remoteHost:'localhost', port:8081)
 
         //environments {
         //    production {
@@ -83,7 +84,7 @@ log4j = {
         //}
     }
 
-    error  'org.codehaus.groovy.grails.web.servlet',  //  controllers
+    info  'org.codehaus.groovy.grails.web.servlet',  //  controllers
            'org.codehaus.groovy.grails.web.pages', //  GSP
            'org.codehaus.groovy.grails.web.sitemesh', //  layouts
            'org.codehaus.groovy.grails.web.mapping.filter', // URL mapping
