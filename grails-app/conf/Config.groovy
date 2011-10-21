@@ -92,7 +92,7 @@ log4j = {
                         protocol: 'tcp',
                         facility: 'USER',
                         host: 'logs2.splunkstorm.com',
-                        post: 20170,
+                        port: 20170,
                         layout: pattern(conversionPattern: '%d{ABSOLUTE} %-5p [%c{1}] %m'),
                 )
             }
