@@ -74,19 +74,10 @@ log4j = {
     //
     appenders {
         console name: 'stdout', layout: pattern(conversionPattern: '%c{2} %m%n')
-        /*
-        appender new Syslog4jAppender(
-                name: 'loggly',
-                protocol: 'tcp',
-                facility: 'USER',
-                host: 'logs.loggly.com',
-                port: 45495,
-                layout: pattern(conversionPattern: '%d{ABSOLUTE} %-5p [%c{1}] %m'),
-        )
-        */
 
         environments {
             production {
+                /*
                 appender new Syslog4jAppender(
                         name: 'splunkstorm',
                         protocol: 'tcp',
@@ -95,11 +86,20 @@ log4j = {
                         port: 20170,
                         layout: pattern(conversionPattern: '%d{ABSOLUTE} %-5p [%c{1}] %m'),
                 )
+                */
+                appender new Syslog4jAppender(
+                        name: 'loggly',
+                        protocol: 'tcp',
+                        facility: 'USER',
+                        host: 'logs.loggly.com',
+                        port: 40056,
+                        //layout: pattern(conversionPattern: '%d{ABSOLUTE} %-5p [%c{1}] %m'),
+                )
             }
         }
     }
     root {
-        info 'stdout', 'splunkstorm', 'loggly'
+        info 'stdout', 'loggly'
         additivity = true
     }
 
